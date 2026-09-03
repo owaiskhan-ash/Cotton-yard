@@ -1,0 +1,8 @@
+{
+  "name": "CottonYard Furnishings",
+  "description": "Bespoke home furnishing store in Ahmedabad and Mumbai offering custom curtains, blinds, upholstery, wooden flooring, wallpaper, and mattresses.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
