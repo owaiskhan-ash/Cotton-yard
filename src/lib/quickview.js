@@ -70,9 +70,7 @@ function show (i) {
 function open (i) {
   if (!dlg) build()
   show(i)
-  // View Transitions where available, plain open otherwise
-  if (document.startViewTransition) document.startViewTransition(() => dlg.showModal())
-  else dlg.showModal()
+  dlg.showModal()
 }
 
 export function initQuickView () {

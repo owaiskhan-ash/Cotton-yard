@@ -91,15 +91,5 @@ export function initFilmstrip () {
     if (e.key === 'ArrowLeft') { strip.scrollBy({ left: -step, behavior: 'smooth' }); e.preventDefault() }
   })
 
-  /* ---- wheel: vertical intent pans horizontally while hovering ---- */
-  strip.addEventListener('wheel', e => {
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-      const max = strip.scrollWidth - strip.clientWidth
-      const next = strip.scrollLeft + e.deltaY
-      // only hijack while there's somewhere to go, so the page still scrolls at the ends
-      if (next > 0 && next < max) { strip.scrollLeft = next; e.preventDefault() }
-    }
-  }, { passive: false })
-
   setView(localStorage.getItem(KEY) || 'list', false)
 }

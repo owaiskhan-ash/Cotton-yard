@@ -36,8 +36,29 @@
   position:absolute;left:-58px;bottom:74px;z-index:3;transform:rotate(-90deg);transform-origin:left bottom;
   font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:#fff;mix-blend-mode:difference;
 }
-.badge{position:absolute;right:26px;top:26px;z-index:3;width:126px;height:126px;animation:spin 26s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
+.badge{
+  position:absolute;
+  right:26px;
+  top:26px;
+  z-index:3;
+  width:126px;
+  height:126px;
+  display:block;
+  transform-origin:50% 50%;
+  -webkit-transform-origin:50% 50%;
+  animation:badge-spin 20s linear infinite;
+  -webkit-animation:badge-spin 20s linear infinite;
+  will-change:transform;
+  pointer-events:none;
+}
+@keyframes badge-spin{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(360deg)}
+}
+@-webkit-keyframes badge-spin{
+  0%{-webkit-transform:rotate(0deg)}
+  100%{-webkit-transform:rotate(360deg)}
+}
 
 /* outline marquee */
 .bigword{overflow:hidden;white-space:nowrap;border-bottom:1px solid var(--line);padding:14px 0;background:linear-gradient(#fff,var(--paper))}

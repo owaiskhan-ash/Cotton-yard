@@ -94,7 +94,15 @@ export function initStoreSwitcher () {
     document.dispatchEvent(new CustomEvent('cy:store', { detail: store }))
   }
 
-  btns.forEach(b => b.addEventListener('click', () => apply(b.dataset.id, true)))
+  btns.forEach(b => b.addEventListener('click', () => {
+    apply(b.dataset.id, true)
+    if (window.innerWidth <= 860) {
+      const card = document.querySelector(`.store[data-id="${b.dataset.id}"]`)
+      if (card) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      }
+    }
+  }))
   addEventListener('resize', moveKnob, { passive: true })
 
   apply(active.id, false)

@@ -52,4 +52,10 @@ body{
 }
 
 /* nothing may widen the document horizontally */
-html,body{max-width:100%;overflow-x:clip}
+html,body{max-width:100%;width:100%;overflow-x:hidden}
+
+/* minimal blue scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--paper); }
+::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--navy); }

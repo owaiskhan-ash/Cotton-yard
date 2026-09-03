@@ -19,8 +19,9 @@
 
 /* ---------- accessibility ---------- */
 @media(prefers-reduced-motion:reduce){
-  *{animation:none!important;transition-duration:.01ms!important}
-  .reveal,.stag>*{opacity:1;transform:none}
+  *:not(.badge):not(.badge *){animation:none!important;transition-duration:.01ms!important}
+  .badge{animation:badge-spin 24s linear infinite!important}
+  .reveal,.stag>*,.fade{opacity:1;transform:none}
   .ln>i{transform:none}
   .curtain{display:none}
   .fig .mask::after{transform:scaleX(0)}

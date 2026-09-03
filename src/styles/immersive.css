@@ -184,14 +184,14 @@ dialog.qv[open]{animation:qv-in .55s var(--ease)}
 .strip{
   display:grid;grid-auto-flow:column;grid-auto-columns:clamp(230px,23vw,330px);
   gap:1px;background:var(--line);border:1px solid var(--line);
-  overflow-x:auto;scroll-snap-type:x mandatory;
+  overflow-x:auto;
   scrollbar-width:none;overscroll-behavior-x:contain;
   cursor:grab;
 }
 .strip::-webkit-scrollbar{display:none}
-.strip.drag{cursor:grabbing;scroll-snap-type:none}
+.strip.drag{cursor:grabbing}
 .strip .cell{
-  scroll-snap-align:start;background:#fff;padding:26px 22px 22px;
+  background:#fff;padding:26px 22px 22px;
   min-height:290px;display:flex;flex-direction:column;justify-content:space-between;
   position:relative;overflow:hidden;transition:background .6s var(--ease);
   user-select:none;
