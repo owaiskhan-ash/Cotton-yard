@@ -1,0 +1,41 @@
+/* ============================================================
+   [5] Optical typography polish
+   Individually invisible; together they read as "typeset".
+   ============================================================ */
+
+h1,h2,h3{text-wrap:balance}
+h4,.shead h2,.store h3{text-wrap:balance}
+p,.lede,.body p,.card p,.jrn p{text-wrap:pretty}
+
+html{hanging-punctuation:first last}
+
+/* true small caps where the face offers them */
+.eyebrow,.idx,.stats span,.crow .c,.store .sub,footer h5,.faddr h6,.fbot,.jrn time{
+  font-variant-caps:all-small-caps;
+  font-feature-settings:"c2sc" 1,"smcp" 1;
+  letter-spacing:.24em;
+}
+/* small-caps shrinks the glyphs, so nudge the size back up */
+.eyebrow{font-size:11.5px}
+.stats span{font-size:11px}
+.jrn time{font-size:11px}
+
+/* lining figures in the statistics so digits align */
+.stats b,.hero-meta span,.num{
+  font-variant-numeric:lining-nums tabular-nums;
+  font-feature-settings:"lnum" 1,"tnum" 1;
+}
+
+/* tighter tracking as display type scales up */
+.hero h1{letter-spacing:-.028em;word-spacing:-.02em}
+.shead h2{letter-spacing:-.022em}
+.flogo{letter-spacing:-.02em}
+
+/* proper quotation marks hang outside the measure */
+.quote{text-indent:-.42em}
+
+/* ligatures + kerning on serif display */
+h1,h2,h3,h4,.flogo,.logo,.crow .t,.quote{
+  font-kerning:normal;
+  font-feature-settings:"liga" 1,"kern" 1;
+}

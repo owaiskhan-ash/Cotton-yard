@@ -1,0 +1,285 @@
+/* ============================================================
+   [3] Sticky section indices
+   Each "01 / House" pins while its section scrolls past,
+   then gets pushed out by the next.
+   ============================================================ */
+.shead{align-items:start}
+.idx{
+  position:sticky;top:96px;z-index:3;
+  align-self:start;
+  padding:6px 0 8px;
+  background:linear-gradient(var(--paper) 70%,transparent);
+  transition:color .5s var(--ease);
+}
+.pat-arc .idx,.pat-blue .idx,.pat-dot .idx,.pat-weave .idx{background:none}
+
+/* ============================================================
+   [4] Fabric-swatch hover on collection rows
+   Each material bleeds its own woven texture + hue.
+   ============================================================ */
+.crow{--swatch:var(--mist); --weave:rgba(13,43,82,.18)}
+.crow::before{
+  background:linear-gradient(90deg,var(--swatch),transparent 78%);
+}
+.crow::after{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  opacity:0;transition:opacity .7s var(--ease);
+  background-image:
+    repeating-linear-gradient(45deg,var(--weave) 0 1px,transparent 1px 7px),
+    repeating-linear-gradient(-45deg,var(--weave) 0 1px,transparent 1px 7px);
+  mask-image:linear-gradient(90deg,#000,transparent 62%);
+}
+.crow:hover::after{opacity:1}
+
+/* per-material palettes — warm for cloth, cool for hard finishes */
+.crow[data-m="bed-linen"]      {--swatch:#f2efe6;--weave:rgba(150,128,86,.22)}
+.crow[data-m="curtains"]       {--swatch:#e8eef8;--weave:rgba(21,70,140,.2)}
+.crow[data-m="window-blinds"]  {--swatch:#e4edf2;--weave:rgba(37,96,124,.2)}
+.crow[data-m="upholstery"]     {--swatch:#f2ebe8;--weave:rgba(150,96,80,.2)}
+.crow[data-m="rugs"]           {--swatch:#efe9df;--weave:rgba(134,104,64,.22)}
+.crow[data-m="wallpaper"]      {--swatch:#eaeaf4;--weave:rgba(78,72,140,.18)}
+.crow[data-m="wooden-flooring"]{--swatch:#f1e8dc;--weave:rgba(146,102,52,.24)}
+.crow[data-m="mattresses"]     {--swatch:#e9f0f6;--weave:rgba(40,84,132,.18)}
+
+/* ============================================================
+   [6] Contextual cursor (desktop, fine pointer only)
+   ============================================================ */
+.cursor{
+  position:fixed;top:0;left:0;z-index:80;pointer-events:none;
+  width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:999px;
+  border:1px solid rgba(13,43,82,.55);
+  display:grid;place-items:center;
+  font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:#fff;white-space:nowrap;
+  transition:width .45s var(--ease),height .45s var(--ease),
+             margin .45s var(--ease),background .45s var(--ease),
+             border-color .45s var(--ease),opacity .3s;
+  opacity:0;
+  will-change:transform;
+}
+.cursor.on{opacity:1}
+.cursor b{opacity:0;transition:opacity .3s;font-weight:500}
+.cursor.wide{
+  width:82px;height:82px;margin:-41px 0 0 -41px;
+  background:rgba(13,43,82,.9);border-color:transparent;
+}
+.cursor.wide b{opacity:1}
+.cursor.dot{width:9px;height:9px;margin:-4.5px 0 0 -4.5px;background:var(--blue);border-color:transparent}
+@media (hover:none),(pointer:coarse){.cursor{display:none}}
+
+/* ============================================================
+   [8] Ambient cursor light over dark grounds
+   ============================================================ */
+.band,footer{position:relative}
+/* NB: never set position on .drawer here — it must stay fixed, or the
+   collapsed menu occupies ~600px of layout above the hero. */
+.band::after,footer::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  opacity:0;transition:opacity .6s var(--ease);
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),
+             rgba(120,170,240,.16),transparent 70%);
+}
+.band.lit::after,footer.lit::after{opacity:1}
+.band>*,footer>*{position:relative;z-index:1}
+
+/* ============================================================
+   [9] Duotone lifts to full colour on hover
+   ============================================================ */
+.fig .mask{position:relative;isolation:isolate}
+.fig .mask .color{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
+  clip-path:inset(0 100% 0 0);
+  transition:clip-path 1.1s var(--ease);
+}
+.fig:hover .mask .color{clip-path:inset(0 0 0 0)}
+.fig .mask::after{z-index:3}
+.jrn article .jm{position:relative;isolation:isolate}
+
+/* ============================================================
+   [11] Quick-view dialog
+   ============================================================ */
+dialog.qv{
+  padding:0;border:0;max-width:min(1180px,92vw);width:100%;
+  background:var(--paper);color:var(--ink);
+  box-shadow:0 60px 140px -60px rgba(8,21,39,.7);
+}
+dialog.qv::backdrop{background:rgba(8,21,39,.62);backdrop-filter:blur(6px)}
+dialog.qv[open]{animation:qv-in .55s var(--ease)}
+@keyframes qv-in{from{opacity:0;transform:translateY(24px) scale(.985)}to{opacity:1;transform:none}}
+.qv-grid{display:grid;grid-template-columns:1fr 1fr;min-height:min(560px,72vh)}
+.qv-fig{position:relative;overflow:hidden;background:var(--mist)}
+.qv-fig::before{
+  content:"";position:absolute;inset:0;z-index:1;opacity:.5;
+  background-image:
+    repeating-linear-gradient(45deg,var(--weave,rgba(13,43,82,.2)) 0 1px,transparent 1px 8px),
+    repeating-linear-gradient(-45deg,var(--weave,rgba(13,43,82,.2)) 0 1px,transparent 1px 8px);
+}
+.qv-fig .sw{position:absolute;inset:0;background:var(--swatch,var(--mist))}
+.qv-fig figcaption{
+  position:absolute;left:24px;bottom:20px;z-index:2;
+  font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--navy);
+}
+.qv-body{padding:clamp(28px,3.6vw,56px);display:flex;flex-direction:column;justify-content:center}
+.qv-body .n{font-family:var(--serif);font-size:12px;color:var(--azure)}
+.qv-body h3{font-size:clamp(30px,4vw,52px);margin:14px 0 8px}
+.qv-body .c{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#7089ab}
+.qv-body p{color:#33507a;margin:22px 0 0;max-width:44ch;font-size:15px}
+.qv-spec{display:grid;gap:0;margin:26px 0 0;border-top:1px solid var(--line)}
+.qv-spec div{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.qv-spec dt{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#7089ab;margin:0}
+.qv-spec dd{margin:0;color:#22405f}
+.qv-acts{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.qv-close{
+  position:absolute;top:16px;right:18px;z-index:5;
+  font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--navy);
+  background:rgba(251,252,254,.9);border-radius:999px;padding:9px 16px;
+}
+.qv-nav{position:absolute;bottom:16px;right:18px;z-index:5;display:flex;gap:8px}
+.qv-nav button{
+  width:38px;height:38px;border-radius:999px;border:1px solid var(--line);
+  background:#fff;color:var(--navy);font-size:15px;transition:.4s var(--ease);
+}
+.qv-nav button:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* ============================================================
+   [12] Store switcher + open-now
+   ============================================================ */
+.switch{
+  display:inline-flex;align-items:center;gap:0;border:1px solid var(--line);
+  border-radius:999px;padding:3px;background:#fff;position:relative;
+}
+.switch button{
+  position:relative;z-index:2;padding:9px 18px;border-radius:999px;
+  color:#5a76a0;transition:color .5s var(--ease);
+}
+.switch button[aria-pressed="true"]{color:#fff}
+.switch .knob{
+  position:absolute;z-index:1;top:3px;bottom:3px;border-radius:999px;
+  background:var(--navy);transition:transform .6s var(--ease),width .6s var(--ease);
+}
+.openstate{
+  display:inline-flex;align-items:center;gap:8px;margin-left:16px;
+  font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#5a76a0;
+}
+.openstate i{width:7px;height:7px;border-radius:999px;background:#8aa0bd;display:inline-block;font-style:normal}
+.openstate.open i{background:#2f9e63;box-shadow:0 0 0 0 rgba(47,158,99,.5);animation:pulse 2.6s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 7px rgba(47,158,99,0)}100%{box-shadow:0 0 0 0 rgba(47,158,99,0)}}
+.storebar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:34px}
+.store.active{box-shadow:inset 0 0 0 2px var(--blue)}
+.store .yours{
+  position:absolute;top:clamp(30px,3.6vw,56px);right:clamp(30px,3.6vw,56px);
+  font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--blue);
+  opacity:0;transition:opacity .5s var(--ease);
+}
+.store.active .yours{opacity:1}
+
+/* ============================================================
+   [13] Fabric-drape displacement on the hero
+   ============================================================ */
+.hero-r.drape img{filter:url(#drape)}
+
+/* ============================================================
+   [14] Horizontal filmstrip for collections
+   ============================================================ */
+.strip{
+  display:grid;grid-auto-flow:column;grid-auto-columns:clamp(230px,23vw,330px);
+  gap:1px;background:var(--line);border:1px solid var(--line);
+  overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;overscroll-behavior-x:contain;
+  cursor:grab;
+}
+.strip::-webkit-scrollbar{display:none}
+.strip.drag{cursor:grabbing;scroll-snap-type:none}
+.strip .cell{
+  scroll-snap-align:start;background:#fff;padding:26px 22px 22px;
+  min-height:290px;display:flex;flex-direction:column;justify-content:space-between;
+  position:relative;overflow:hidden;transition:background .6s var(--ease);
+  user-select:none;
+}
+.strip .cell::after{
+  content:"";position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none;
+  background-image:
+    repeating-linear-gradient(45deg,var(--weave) 0 1px,transparent 1px 8px),
+    repeating-linear-gradient(-45deg,var(--weave) 0 1px,transparent 1px 8px);
+  mask-image:linear-gradient(#000,transparent 62%);
+}
+.strip .cell>*{position:relative;z-index:1}
+.strip .cell:hover{background:var(--swatch)}
+.strip .cell .n{font-family:var(--serif);font-size:12px;color:var(--azure)}
+.strip .cell h4{font-family:var(--serif);font-size:clamp(21px,2.2vw,30px);margin:16px 0 8px;line-height:1.05}
+.strip .cell .c{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#7089ab}
+.strip .cell .go{margin-top:20px;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue)}
+.striprail{display:flex;align-items:center;gap:14px;margin-top:20px}
+.striprail .bar{flex:1;height:1px;background:var(--line);position:relative;overflow:hidden}
+.striprail .bar i{position:absolute;left:0;top:0;height:100%;width:20%;background:var(--navy);transition:transform .1s linear}
+.striprail .hint{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#7089ab}
+.viewtoggle{display:flex;gap:8px}
+.viewtoggle button{
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#5a76a0;
+  border:1px solid var(--line);border-radius:999px;padding:7px 14px;transition:.4s var(--ease);
+}
+.viewtoggle button[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+[hidden]{display:none!important}
+
+/* ============================================================
+   [15] Window measure tool
+   ============================================================ */
+.measure{
+  display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(26px,4vw,64px);
+  align-items:center;border:1px solid var(--line);background:#fff;
+  padding:clamp(28px,3.6vw,56px);position:relative;overflow:hidden;
+}
+.measure::before{
+  content:"";position:absolute;inset:0;opacity:.05;pointer-events:none;
+  background-image:linear-gradient(var(--blue) 1px,transparent 1px),linear-gradient(90deg,var(--blue) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+.measure>*{position:relative}
+.mform{display:grid;gap:16px}
+.mrow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mfield label{display:block;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#7089ab;margin-bottom:7px}
+.mfield input,.mfield select{
+  width:100%;padding:13px 14px;border:1px solid var(--line);background:var(--paper);
+  font-family:var(--sans);font-size:15px;color:var(--ink);border-radius:0;
+  transition:border-color .4s var(--ease),background .4s var(--ease);
+}
+.mfield input:focus,.mfield select:focus{outline:none;border-color:var(--blue);background:#fff}
+.mout{border-top:1px solid var(--line);margin-top:6px}
+.mout div{display:grid;grid-template-columns:1fr auto;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);font-size:14px}
+.mout dt{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#7089ab;margin:0;align-self:center}
+.mout dd{margin:0;font-family:var(--serif);font-size:23px;color:var(--navy);line-height:1}
+.mout dd small{font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7089ab;margin-left:5px}
+.mnote{font-size:12.5px;color:#7089ab;margin:16px 0 0;max-width:46ch}
+
+/* window diagram */
+.mviz{position:relative;aspect-ratio:4/3.2;border:1px solid var(--line);background:var(--paper);padding:34px 30px}
+.mviz .frame{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  border:2px solid var(--navy);background:
+    linear-gradient(rgba(63,127,212,.09),rgba(63,127,212,.03));
+  transition:width .7s var(--ease),height .7s var(--ease);
+}
+.mviz .frame::before,.mviz .frame::after{
+  content:"";position:absolute;background:var(--navy);opacity:.35;
+}
+.mviz .frame::before{left:50%;top:0;bottom:0;width:1px}
+.mviz .frame::after{top:50%;left:0;right:0;height:1px}
+.mviz .drape{
+  position:absolute;top:-14px;bottom:-4%;width:24%;
+  background:repeating-linear-gradient(90deg,rgba(13,43,82,.5) 0 1px,rgba(13,43,82,.14) 1px 7px);
+  transition:width .7s var(--ease),opacity .5s;
+}
+.mviz .drape.l{left:-13%}
+.mviz .drape.r{right:-13%}
+.mviz .rod{position:absolute;height:3px;background:var(--navy);border-radius:2px;top:-18px;transition:width .7s var(--ease),left .7s var(--ease)}
+.mviz .dim{position:absolute;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#7089ab}
+.mviz .dim.w{left:0;right:0;bottom:8px;text-align:center}
+.mviz .dim.h{left:8px;top:50%;transform:translateY(-50%) rotate(-90deg);transform-origin:center}
+
+@media(max-width:980px){
+  .qv-grid{grid-template-columns:1fr}
+  .qv-fig{min-height:210px}
+  .measure{grid-template-columns:1fr}
+  .idx{position:static}
+  .cursor{display:none}
+}

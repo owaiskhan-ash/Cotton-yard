@@ -1,0 +1,85 @@
+/* ============================================================
+   [1] Native scroll-driven animations
+   Runs on the compositor, off the main thread. Where supported,
+   this supersedes the JS IntersectionObserver reveals entirely
+   (reveal.js detects support and no-ops).
+   [2] Cross-document / same-document view transitions
+   ============================================================ */
+
+@view-transition { navigation: auto; }
+
+::view-transition-old(root),
+::view-transition-new(root){
+  animation-duration:.5s;
+  animation-timing-function:var(--ease);
+}
+
+@supports (animation-timeline: view()) {
+  @media not (prefers-reduced-motion: reduce) {
+
+    /* section-level reveal */
+    .reveal{
+      opacity:1;transform:none;transition:none;
+      animation:sd-rise linear both;
+      animation-timeline:view();
+      animation-range:entry 5% cover 26%;
+    }
+
+    /* staggered children — each child gets its own timeline */
+    .stag>*{
+      opacity:1;transform:none;transition:none;
+      animation:sd-rise linear both;
+      animation-timeline:view();
+      animation-range:entry 2% cover 24%;
+    }
+
+    /* figure zoom settle + wipe */
+    .fig img{
+      transform:none;transition:filter .8s var(--ease);
+      animation:sd-settle linear both;
+      animation-timeline:view();
+      animation-range:entry 0% cover 34%;
+    }
+    .fig .mask::after{
+      transition:none;
+      animation:sd-wipe linear both;
+      animation-timeline:view();
+      animation-range:entry 4% cover 30%;
+    }
+
+    /* the hero image drifts without a scroll listener */
+    .hero-r img{
+      animation:sd-parallax linear both;
+      animation-timeline:view();
+      animation-range:cover 0% cover 100%;
+    }
+
+    /* progress hairline, driven by document scroll */
+    .prog{
+      width:100%;transform:scaleX(0);transform-origin:0 50%;transition:none;
+      animation:sd-prog linear both;
+      animation-timeline:scroll(root block);
+    }
+  }
+}
+
+@keyframes sd-rise{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:none}
+}
+@keyframes sd-settle{
+  from{transform:scale(1.12)}
+  to{transform:scale(1)}
+}
+@keyframes sd-wipe{
+  from{transform:scaleX(1)}
+  to{transform:scaleX(0)}
+}
+@keyframes sd-parallax{
+  from{transform:translateY(-4%)}
+  to{transform:translateY(4%)}
+}
+@keyframes sd-prog{
+  from{transform:scaleX(0)}
+  to{transform:scaleX(1)}
+}

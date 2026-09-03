@@ -1,0 +1,17 @@
+.stores{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+.store{background:#fff;padding:clamp(30px,3.6vw,56px);position:relative;overflow:hidden;transition:.7s var(--ease)}
+.store::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--blue);transition:width .8s var(--ease)}
+.store:hover::after{width:100%}
+.store .flag{
+  font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:#fff;
+  background:var(--blue);border-radius:999px;padding:5px 12px;display:inline-block;
+}
+.store h3{font-size:clamp(28px,3.6vw,48px);margin:18px 0 6px}
+.store .sub{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:#7089ab;margin:0}
+.store address{color:#33507a;margin:22px 0 0;max-width:34ch;font-size:15px}
+.store .meta{margin-top:20px;font-size:14px;color:#33507a;display:grid;gap:6px;justify-items:start}
+.store .meta a:hover{color:var(--blue)}
+.store .acts{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+
+/* second store gets a faint tailor's-stripe ground */
+.soon{background:repeating-linear-gradient(45deg,#fff 0 12px,#fafcff 12px 24px)}
